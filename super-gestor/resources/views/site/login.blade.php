@@ -23,11 +23,13 @@
                 @error('password')
                     <div style="color: red"><li>{{ $message }}</li></div>
                 @enderror
-                
+
                 <button class="borda-branca" type="submit">Login</button>
                 </form>
 
                 <div style="text-align: center">{{ isset($erro) ? $erro : '' }}</div>
+
+                <a href="{{ route('cadastro') }}">Faça seu cadastro aqui!</a>
             </div>
         </div>
     </div>
