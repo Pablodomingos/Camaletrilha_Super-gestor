@@ -4,7 +4,7 @@
     <input name="nome" value="{{ old('nome') }}" type="text" placeholder="Nome" class="{{ $classe }}">
     {{ $errors->any('nome') ? $errors->first('nome') : '' }}
     <br>
-    <input name="telefone" value="{{ old('telefone') }}" type="number" placeholder="Telefone" class="{{ $classe }}">
+    <input name="telefone" value="{{ old('telefone') }}" type="text" placeholder="Telefone" class="{{ $classe }}">
     {{ $errors->any('telefone') ? $errors->first('telefone') : '' }}
     <br>
     <input name="email" value="{{ old('email') }}" type="text" placeholder="E-mail" class="{{ $classe }}">
