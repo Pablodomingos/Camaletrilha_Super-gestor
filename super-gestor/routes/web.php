@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware(LogAcessoMiddleware::class) 
+// Route::middleware(LogAcessoMiddleware::class)
 //     ->get('/', [PrincipalController::class, 'principal'])
 //     ->name('site.index');
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index')->middleware('log.acesso');
@@ -35,6 +35,8 @@ Route::post('/contato', [ContatoController::class, 'salvar'])->name('salvar');
 
 Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
 Route::post('/login', [LoginController::class, 'autenticar'])->name('site.form');
+Route::get('/cadastro', [LoginController::class, 'cadastro'])->name('cadastro');
+Route::post('/cadastro/{erro?}', [LoginController::class, 'autenticacao_cadastro'])->name('cadastro.form');
 
 Route::middleware('autenticacao:padrao,visitante,p3,p4')->prefix('/app/')->group(function() {
     Route::get('home', [HomeController::class, 'index'])->name('app.home');
