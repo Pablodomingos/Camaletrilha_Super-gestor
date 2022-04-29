@@ -41,7 +41,14 @@ Route::post('/cadastro/{erro?}', [LoginController::class, 'autenticacao_cadastro
 Route::middleware('autenticacao:padrao,visitante,p3,p4')->prefix('/app/')->group(function() {
     Route::get('home', [HomeController::class, 'index'])->name('app.home');
     Route::get('cliente', [ClienteController::class, 'index'])->name('app.cliente');
-    Route::get('fornecedore', [FornecedorController::class, 'index'])->name('app.fornecedor');
+
+    Route::controller(FornecedorController::class)->group(function (){
+        Route::get('fornecedor', 'index')->name('app.fornecedor');
+        Route::get('fornecedor/adicionar', 'adicionar')->name('app.fornecedor.adicionar');
+        Route::post('fornecedor/adicionar', 'adicionar')->name('app.fornecedor.adiciona');
+        Route::post('fornecedor/lista', 'consulta')->name('app.fornecedor.lista');
+    });
+
     Route::get('produto', [ProdutoController::class, 'index'])->name('app.produto');
     Route::get('sair', [LoginController::class, 'sair'])->name('app.sair');
 });
