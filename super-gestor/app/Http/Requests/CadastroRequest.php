@@ -35,8 +35,8 @@ class CadastroRequest extends FormRequest
     {
         return [
             'name.required' => 'Digite o seu nome',
-            'email' => 'Digite seu email aqui PORRA!',
-            'required' => 'Precisa colocar uma senha sua mula',
+            'email' => 'Digite seu email aqui!',
+            'required' => 'Precisa colocar uma senha!',
             'min' => 'A quantidade minima é 4',
             'max' => 'Você atingiu a quantidade maxíma de caracteres'
         ];
