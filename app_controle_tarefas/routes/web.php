@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\TarefaController;
+use App\Mail\MensagemEmail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('tarefa/exportar/{tipo_exportacao}', [TarefaController::class, 'exportacao'])->name('tarefa.exportar');
+Route::get('tarefa/exportacao', [TarefaController::class, 'exportarPdfComNovoPacote'])->name('tarefa.exportacao');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('bem-vindo');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/*
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home')
+    ->middleware('verified');
+*/
 
-Auth::routes();
+// Route::middleware('auth')->resource('tarefa', 'App\Http\Controllers\TarefaController');
+Route::resource('tarefa', 'App\Http\Controllers\TarefaController')
+    ->middleware('verified');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/mensagem-teste', function() {
+    return new MensagemEmail();
+    Mail::to('pablodomingos1700@gmail.com')->send(new MensagemEmail());
+    return 'E-mail enviado com sucesso';
+});
