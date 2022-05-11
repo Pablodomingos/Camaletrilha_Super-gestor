@@ -18,4 +18,9 @@ class Modelo extends Model
         'air_bag',
         'abs'
     ];
+
+    public function marca() {
+        //UM modelo pertence a UMA marca
+        return $this->belongsTo(Marca::class);
+    }
 }

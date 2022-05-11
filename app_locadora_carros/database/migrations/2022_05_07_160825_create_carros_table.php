@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('modelo_id')->constrained()->onDelete('CASCADE');
             $table->string('placa', 10)->unique();
-            $table->tinyInteger('disponivel');
+            $table->boolean('disponivel');
             $table->integer('km');
             $table->timestamps();
         });

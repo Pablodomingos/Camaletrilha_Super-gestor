@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('image', 100);
             $table->integer('numero_portas');
             $table->integer('lugares');
-            $table->tinyInteger('air_bag');
-            $table->tinyInteger('abs');
+            $table->boolean('air_bag');
+            $table->boolean('abs');
             $table->timestamps();
         });
     }
