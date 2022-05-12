@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ModeloRequest;
 use App\Models\Modelo;
+use App\Repositories\ModeloRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,9 +20,23 @@ class ModeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->modelo->with('marca')->get(), 200);
+        $modeloRepository = new ModeloRepository($this->modelo);
+
+        if($request?->has('atributos_marca')) {
+            $modeloRepository->selectAtributeRegistrosRelacionados("marca:id,$request->atributos_marca");
+        }else {
+            $modeloRepository->selectAtributeRegistrosRelacionados('marca');
+        }
+
+        if ($request?->has('filtro')){
+            $modeloRepository->filtro($request->filtro);
+        }
+
+        $request?->has('atributos') ? $modeloRepository->selectAtributos($request->atributos) : '';
+
+        return response()->json($modeloRepository->getResultado(), 200);
         //all() -> criando um obj de consulta + get() = collection
         //get() -> modeificar a consulta -> collection
     }
@@ -84,6 +99,11 @@ class ModeloController extends Controller
         }
 
         if($modelo !== null) {
+            $modelo->fill($request->all());
+            $modelo->image = $imagem;
+            $modelo->save();
+
+            /*
             $modelo->update([
                 'marca_id' => $modelo->marca_id,
                 'nome' => $request->nome ?? $modelo->nome,
@@ -93,6 +113,8 @@ class ModeloController extends Controller
                 'air_bag' => $request->air_bag ?? $modelo->air_bag,
                 'abs' => $request->abs ?? $modelo->abs
             ]);
+            */
+
             return response()->json($modelo, 200);
         }
 
